@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
-import { Place } from './entities/remedy.entity';
+import { Remedy } from './entities/remedy.entity';
 
-export const placeProviders = [
+export const remedyProviders = [
   {
     provide: 'REMEDY_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Place),
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Remedy),
     inject: ['DATA_SOURCE'],
   },
 ];

@@ -21,8 +21,6 @@ export class UsersService {
       ...createUserDto,
     });
 
-    console.log('user :>> ', user);
-
     try {
       await this.userRepository.save(user);
 

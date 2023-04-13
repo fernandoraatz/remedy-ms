@@ -5,7 +5,7 @@ services:
     image: postgres:alpine
     ports:
       - '5432:5432'
-    container_name: 'pgsqlfood'
+    container_name: 'pgsqldrugstore'
     restart: always
     volumes:
       - pg-data:/var/lib/postgresql/data

@@ -1,71 +1,71 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreatePlaceDto } from './dtos/create-remedy.dto';
-import { Place } from './entities/remedy.entity';
+import { CreateRemedyDto } from './dtos/create-remedy.dto';
+import { Remedy } from './entities/remedy.entity';
 import { InternalServerErrorException } from '@nestjs/common';
-import { UpdatePlaceDto } from './dtos/update-remedy.dto';
+import { UpdateRemedyDto } from './dtos/update-remedy.dto';
 
 @Injectable()
 export class RemediesService {
   constructor(
     @Inject('REMEDY_REPOSITORY')
-    private placeRepository: Repository<Place>,
+    private remedyRepository: Repository<Remedy>,
   ) {}
 
   findAll() {
-    return this.placeRepository.find();
+    return this.remedyRepository.find();
   }
 
-  async createPlace(createPlaceDto: CreatePlaceDto): Promise<Place> {
-    const place = this.placeRepository.create({
-      ...createPlaceDto,
+  async createRemedy(createRemedyDto: CreateRemedyDto): Promise<Remedy> {
+    const remedy = this.remedyRepository.create({
+      ...createRemedyDto,
     });
 
     try {
-      await this.placeRepository.save(place);
+      await this.remedyRepository.save(remedy);
 
-      return place;
+      return remedy;
     } catch (error) {
       throw new InternalServerErrorException(
-        'Erro ao salvar o estabelecimento no banco de dados',
+        'Erro ao salvar o Remédio no banco de dados',
       );
     }
   }
 
   async findOne(id: string) {
-    const place = await this.placeRepository.findOne({
+    const remedy = await this.remedyRepository.findOne({
       where: { id },
     });
 
-    if (!place) {
+    if (!remedy) {
       throw new NotFoundException(`Remédio ID ${id} não encontrado`);
     }
 
-    return place;
+    return remedy;
   }
 
   async remove(id: string) {
-    const place = await this.placeRepository.findOne({
+    const remedy = await this.remedyRepository.findOne({
       where: { id },
     });
 
-    if (!place) {
+    if (!remedy) {
       throw new NotFoundException(`Remédio ID ${id} não encontrado`);
     }
 
-    return this.placeRepository.remove(place);
+    return this.remedyRepository.remove(remedy);
   }
 
-  async update(id: string, updateCourseDto: UpdatePlaceDto) {
-    const place = await this.placeRepository.preload({
+  async update(id: string, updateCourseDto: UpdateRemedyDto) {
+    const remedy = await this.remedyRepository.preload({
       id,
       ...updateCourseDto,
     });
 
-    if (!place) {
+    if (!remedy) {
       throw new NotFoundException(`Remédio ID ${id} não encontrado`);
     }
 
-    return this.placeRepository.save(place);
+    return this.remedyRepository.save(remedy);
   }
 }

@@ -1,6 +1,6 @@
-import { Place } from '../entities/remedy.entity';
+import { Remedy } from '../entities/remedy.entity';
 
-export class ReturnPlaceDto {
-  place: Place;
+export class ReturnRemedyDto {
+  remedy: Remedy;
   message: string;
 }

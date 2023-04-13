@@ -7,10 +7,10 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { CreatePlaceDto } from './dtos/create-remedy.dto';
+import { CreateRemedyDto } from './dtos/create-remedy.dto';
 import { RemediesService } from './remedies.service';
-import { ReturnPlaceDto } from './dtos/return-remedy.dto';
-import { UpdatePlaceDto } from './dtos/update-remedy.dto';
+import { ReturnRemedyDto } from './dtos/return-remedy.dto';
+import { UpdateRemedyDto } from './dtos/update-remedy.dto';
 
 @Controller('remedies')
 export class RemediesController {
@@ -32,18 +32,18 @@ export class RemediesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdatePlaceDto) {
+  update(@Param('id') id: string, @Body() updateCourseDto: UpdateRemedyDto) {
     return this.remediesService.update(id, updateCourseDto);
   }
 
   @Post()
-  async createPlace(
-    @Body() createPlaceDto: CreatePlaceDto,
-  ): Promise<ReturnPlaceDto> {
-    const place = await this.remediesService.createPlace(createPlaceDto);
+  async createRemedy(
+    @Body() createRemedyDto: CreateRemedyDto,
+  ): Promise<ReturnRemedyDto> {
+    const remedy = await this.remediesService.createRemedy(createRemedyDto);
 
     return {
-      place,
+      remedy,
       message: 'Remédio cadastrado com sucesso',
     };
   }

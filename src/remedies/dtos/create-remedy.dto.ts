@@ -1,4 +1,4 @@
-export class CreatePlaceDto {
+export class CreateRemedyDto {
   name: string;
   type: string;
   local: string;

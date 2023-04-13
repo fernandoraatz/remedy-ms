@@ -8,14 +8,14 @@ import {
 } from 'typeorm';
 
 @Entity('remedies')
-export class Place extends BaseEntity {
+export class Remedy extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ nullable: false, type: 'varchar', length: 200 })
   name: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 20 })
+  @Column({ nullable: false, type: 'varchar', length: 200 })
   description: string;
 
   @Column({ nullable: false, type: 'varchar', length: 10 })
