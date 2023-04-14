@@ -80,18 +80,11 @@ export class UsersService {
       where: { id: createUserRemedyDto.userId },
     });
 
-    console.log(
-      'createUserRemedyDto.remedyID :>> ',
-      createUserRemedyDto.remedyId,
-    );
-
     const remedy = await this.remedyRepository.findOne({
       where: { id: createUserRemedyDto.remedyId },
     });
 
-    console.log('remedy :>> ', remedy);
-
-    user.remedies = [...user.remedies, remedy];
+    user.remedies.push(...user.remedies, remedy);
 
     try {
       await this.userRepository.save(user);
