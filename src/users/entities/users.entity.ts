@@ -6,7 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Unique,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+
+import { Remedy } from '../../remedies/entities/remedy.entity';
 
 @Entity('users')
 @Unique(['email'])
@@ -19,6 +23,13 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false })
   password: string;
+
+  @ManyToMany((type) => Remedy, (remedy) => remedy.users, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinTable()
+  remedies: Remedy[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -4,12 +4,14 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/users.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { Remedy } from '../remedies/entities/remedy.entity';
+import { CreateUserRemedyDto } from './dtos/create-userRemedy.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('USER_REPOSITORY')
-    private userRepository: Repository<User>,
+    private userRepository: Repository<User>, // @Inject('REMEDY_REPOSITORY') // private remedyRepository: Repository<Remedy>,
   ) {}
 
   findAll() {
@@ -25,6 +27,25 @@ export class UsersService {
       await this.userRepository.save(user);
 
       return user;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Erro ao salvar o usuário no banco de dados',
+      );
+    }
+  }
+
+  async createUserRemedy(
+    createUserRemedyDto: CreateUserRemedyDto,
+  ): Promise<any> {
+    // const userRemedy = this.userRepository.create({
+    //   ...createUserRemedyDto,
+    // });
+
+    try {
+      console.log('criar userRemedy :>> ', createUserRemedyDto);
+      // await this.userRepository.save(userRemedy);
+
+      // return userRemedy;
     } catch (error) {
       throw new InternalServerErrorException(
         'Erro ao salvar o usuário no banco de dados',

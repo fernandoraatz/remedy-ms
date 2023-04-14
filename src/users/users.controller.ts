@@ -11,6 +11,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { ReturnUserDto } from './dtos/return-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { CreateUserRemedyDto } from './dtos/create-userRemedy.dto';
 
 @Controller('users')
 export class UsersController {
@@ -47,4 +48,16 @@ export class UsersController {
       message: 'Usuário cadastrado com sucesso',
     };
   }
+
+  // @Post('/remedies')
+  // async createUserRemedies(
+  //   @Body() createUserRemedyDto: CreateUserRemedyDto,
+  // ): Promise<any> {
+  //   const user = await this.usersService.createUserRemedy(createUserRemedyDto);
+
+  //   return {
+  //     user,
+  //     message: 'Usuário cadastrado com sucesso',
+  //   };
+  // }
 }
