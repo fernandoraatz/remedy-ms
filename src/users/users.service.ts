@@ -11,7 +11,9 @@ import { CreateUserRemedyDto } from './dtos/create-userRemedy.dto';
 export class UsersService {
   constructor(
     @Inject('USER_REPOSITORY')
-    private userRepository: Repository<User>, // @Inject('REMEDY_REPOSITORY') // private remedyRepository: Repository<Remedy>,
+    private userRepository: Repository<User>,
+    @Inject('REMEDY_REPOSITORY')
+    private remedyRepository: Repository<Remedy>,
   ) {}
 
   findAll() {
@@ -27,25 +29,6 @@ export class UsersService {
       await this.userRepository.save(user);
 
       return user;
-    } catch (error) {
-      throw new InternalServerErrorException(
-        'Erro ao salvar o usuário no banco de dados',
-      );
-    }
-  }
-
-  async createUserRemedy(
-    createUserRemedyDto: CreateUserRemedyDto,
-  ): Promise<any> {
-    // const userRemedy = this.userRepository.create({
-    //   ...createUserRemedyDto,
-    // });
-
-    try {
-      console.log('criar userRemedy :>> ', createUserRemedyDto);
-      // await this.userRepository.save(userRemedy);
-
-      // return userRemedy;
     } catch (error) {
       throw new InternalServerErrorException(
         'Erro ao salvar o usuário no banco de dados',
@@ -88,5 +71,36 @@ export class UsersService {
     }
 
     return this.userRepository.save(user);
+  }
+
+  async createUserRemedy(
+    createUserRemedyDto: CreateUserRemedyDto,
+  ): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: { id: createUserRemedyDto.userId },
+    });
+
+    console.log(
+      'createUserRemedyDto.remedyID :>> ',
+      createUserRemedyDto.remedyId,
+    );
+
+    const remedy = await this.remedyRepository.findOne({
+      where: { id: createUserRemedyDto.remedyId },
+    });
+
+    console.log('remedy :>> ', remedy);
+
+    user.remedies = [...user.remedies, remedy];
+
+    try {
+      await this.userRepository.save(user);
+      return user;
+    } catch (error) {
+      console.log('error :>> ', error);
+      throw new InternalServerErrorException(
+        'Erro ao salvar o usuário no banco de dados',
+      );
+    }
   }
 }

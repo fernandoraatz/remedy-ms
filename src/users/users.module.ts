@@ -4,10 +4,11 @@ import { userProviders } from './users.providers';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { RemediesModule } from '../remedies/remedies.module';
+import { remedyProviders } from '../remedies/remedies.providers';
 
 @Module({
   imports: [DatabaseModule, RemediesModule],
-  providers: [...userProviders, UsersService],
+  providers: [...userProviders, ...remedyProviders, UsersService],
   controllers: [UsersController],
 })
 export class UsersModule {}

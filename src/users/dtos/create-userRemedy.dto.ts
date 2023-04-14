@@ -1,4 +1,4 @@
 export class CreateUserRemedyDto {
   userId: string;
-  remedyID: string;
+  remedyId: string;
 }

@@ -49,15 +49,14 @@ export class UsersController {
     };
   }
 
-  // @Post('/remedies')
-  // async createUserRemedies(
-  //   @Body() createUserRemedyDto: CreateUserRemedyDto,
-  // ): Promise<any> {
-  //   const user = await this.usersService.createUserRemedy(createUserRemedyDto);
-
-  //   return {
-  //     user,
-  //     message: 'Usuário cadastrado com sucesso',
-  //   };
-  // }
+  @Post('/remedy')
+  async createUserRemedy(
+    @Body() createUserRemedyDto: CreateUserRemedyDto,
+  ): Promise<any> {
+    const user = await this.usersService.createUserRemedy(createUserRemedyDto);
+    return {
+      user,
+      message: 'Remédio do usuário cadastrado com sucesso',
+    };
+  }
 }
