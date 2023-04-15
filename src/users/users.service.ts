@@ -20,6 +20,14 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findUserRemedies(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    return user.remedies;
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create({
       ...createUserDto,
@@ -45,7 +53,12 @@ export class UsersService {
       throw new NotFoundException(`Usuário ID ${id} não encontrado`);
     }
 
-    return user;
+    const returnUser = {
+      id: user.id,
+      email: user.email,
+    };
+
+    return returnUser;
   }
 
   async remove(id: string) {

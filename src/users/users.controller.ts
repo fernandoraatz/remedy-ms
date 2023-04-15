@@ -17,6 +17,11 @@ import { CreateUserRemedyDto } from './dtos/create-userRemedy.dto';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @Get('/remedies/:id')
+  findUserRemedies(@Param('id') id: string) {
+    return this.usersService.findUserRemedies(id);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
