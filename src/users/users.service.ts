@@ -73,22 +73,31 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async createUserRemedy(
-    createUserRemedyDto: CreateUserRemedyDto,
-  ): Promise<any> {
+  async createUserRemedy(dto: CreateUserRemedyDto): Promise<any> {
     const user = await this.userRepository.findOne({
-      where: { id: createUserRemedyDto.userId },
+      where: { id: dto.userId },
     });
 
     const remedy = await this.remedyRepository.findOne({
-      where: { id: createUserRemedyDto.remedyId },
+      where: { id: dto.remedyId },
     });
 
-    user.remedies.push(...user.remedies, remedy);
+    const userRemedies = user.remedies;
+
+    const hasRemedy = userRemedies.find((item) => item.id === dto.remedyId);
+
+    if (!hasRemedy) {
+      userRemedies.push(remedy);
+    } else {
+      throw new InternalServerErrorException(
+        'Esse remédio esse usuário já tem',
+      );
+    }
 
     try {
-      await this.userRepository.save(user);
-      return user;
+      const userRemedies = await this.userRepository.save(user);
+
+      return userRemedies;
     } catch (error) {
       console.log('error :>> ', error);
       throw new InternalServerErrorException(
